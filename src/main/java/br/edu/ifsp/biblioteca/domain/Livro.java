@@ -7,7 +7,6 @@ public class Livro {
     private Integer anoPublicacao;
 
     public Livro(Long id, String isbn, String titulo, Integer anoPublicacao) {
-        this.id = id;
         this.isbn = isbn;
         this.titulo = titulo;
         this.anoPublicacao = anoPublicacao;
