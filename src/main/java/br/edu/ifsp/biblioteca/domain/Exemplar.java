@@ -6,9 +6,7 @@ public class Exemplar {
     private Livro livro;
     private EStatusExemplar status;
 
-    public Exemplar(Long id, String codigo, Livro livro, EStatusExemplar status) {
-        this.id = id;
-        this.codigo = codigo;
+    public Exemplar(String codigo, Livro livro) {
         this.livro = livro;
         this.status = status;
     }

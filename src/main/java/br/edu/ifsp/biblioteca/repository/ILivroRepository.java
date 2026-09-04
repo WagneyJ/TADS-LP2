@@ -13,7 +13,7 @@ public interface ILivroRepository {
 
     public Optional<Livro> buscarPorId(Long Id);
 
-    public Optional<Object> buscarPorIsbn(String isbn);
+    public Optional<Livro> buscarPorIsbn(String isbn);
 
     public List<Livro> buscarPorTitulo(String titulo);
 }
