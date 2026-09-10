@@ -42,7 +42,7 @@ public class LivroRepositoryEmMemoria implements ILivroRepository{
     }
 
     @Override
-    public Optional<Object> buscarPorIsbn(String isbn) {
+    public Optional<Livro> buscarPorIsbn(String isbn) {
         
        List<Livro> colecaoLivros = new ArrayList<>(this.livros.values());
 

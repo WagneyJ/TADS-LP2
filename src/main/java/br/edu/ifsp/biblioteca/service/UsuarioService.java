@@ -4,6 +4,7 @@ import br.edu.ifsp.biblioteca.domain.Usuario;
 import br.edu.ifsp.biblioteca.exception.RegraDeNegocioException;
 import br.edu.ifsp.biblioteca.repository.IUsuarioRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public class UsuarioService {
@@ -39,9 +40,13 @@ public class UsuarioService {
     public void validarEmail(String email){
         Optional<Usuario> usuarioOptional = this.usuarioRepository.buscarPorEmail(email);
 
-        if (usuarioOptional.isPresent();
-        throw new RegraDeNegocioException("Já existente");
+        if (usuarioOptional.isPresent() ) {
+            throw new RegraDeNegocioException("Já existente");
+        }
 
+    }
 
+    public List<Usuario> listarTodos() {
+        return this.usuarioRepository.listarTodos();
     }
 }
