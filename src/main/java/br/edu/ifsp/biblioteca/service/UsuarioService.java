@@ -3,10 +3,12 @@ package br.edu.ifsp.biblioteca.service;
 import br.edu.ifsp.biblioteca.domain.Usuario;
 import br.edu.ifsp.biblioteca.exception.RegraDeNegocioException;
 import br.edu.ifsp.biblioteca.repository.IUsuarioRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class UsuarioService {
 
     private final IUsuarioRepository usuarioRepository;
@@ -15,7 +17,7 @@ public class UsuarioService {
         this.usuarioRepository = repository;
     }
 
-    public Usuario cadastar(Usuario usuario){
+    public Usuario cadastrar(Usuario usuario){
         if(usuario.getNome() == null || usuario.getNome().isEmpty())
             throw new RegraDeNegocioException("Nome é Obrigatório");
 
