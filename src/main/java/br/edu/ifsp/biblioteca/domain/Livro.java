@@ -12,6 +12,7 @@ public class Livro {
     private List<Autor> autores;
 
     public Livro(String isbn, String titulo, Integer anoPublicacao) {
+        this.id = id;
         this.isbn = isbn;
         this.titulo = titulo;
         this.anoPublicacao = anoPublicacao;
@@ -57,6 +58,14 @@ public class Livro {
 
     public void adicionarAutor(Autor autor) {
         this.autores.add(autor);
+    }
+
+    public List<Autor> getAutores (){
+        return this.autores;
+    }
+
+    public List<Exemplar> getExemplares() {
+        return this.exemplares;
     }
 
     @Override
