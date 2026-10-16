@@ -30,15 +30,22 @@ public class LivroRepositoryJdbc implements ILivroRepository{
         {
             conexao.setAutoCommit(false);
 
-            if(livro.getId() == null){ //precisa cadastrar
-                this.inserirLivro(conexao, livro);
+            try {
+                if(livro.getId() == null){ //precisa cadastrar
+                    this.inserirLivro(conexao, livro);
 
-            } else {    //precisa atualizar
-                this.atualizarLivro(conexao, livro);
+                } else {    //precisa atualizar
+                    this.atualizarLivro(conexao, livro);
+                }
+
+                this.salvarAutores(conexao, livro);
+                this.salvarExemplares(conexao, livro);
+
+                conexao.commit();
+            } catch (SQLException erro){
+                conexao.rollback();
+                throw erro;
             }
-
-            this.salvarAutores(conexao, livro);
-            this.salvarExemplares(conexao, livro);
 
         } catch (SQLException erro){
             throw new IllegalStateException("Falha ao salvar livro", erro);
@@ -67,7 +74,7 @@ public class LivroRepositoryJdbc implements ILivroRepository{
     }
 
     private void atualizarLivro(Connection conexao, Livro livro) throws SQLException{
-        String sql = "UPDATE SET isbn = ?, titulo = ?, ano_publicacao = ? WHERE id = ?";
+        String sql = "UPDATE livro SET isbn = ?, titulo = ?, ano_publicacao = ? WHERE id = ?";
 
         try (PreparedStatement comando = conexao.prepareStatement(sql) ){
             comando.setString(1, livro.getIsbn() );
@@ -93,7 +100,7 @@ public class LivroRepositoryJdbc implements ILivroRepository{
                     comando.executeUpdate();
 
                     try(ResultSet rs = comando.getGeneratedKeys()){
-                        if(rs == null){
+                        if(rs.next()){
                             autor.setId(rs.getLong(1));
                         }
 
@@ -106,7 +113,7 @@ public class LivroRepositoryJdbc implements ILivroRepository{
 
             try (PreparedStatement comando = conexao.prepareStatement(sqlIntermediario)){
                 comando.setLong(1, livro.getId());
-                comando.setLong(1, autor.getId());
+                comando.setLong(2, autor.getId());
                 comando.executeUpdate();
             }
         }
