@@ -1,19 +1,15 @@
 package br.edu.ifsp.biblioteca.repository;
 
 import br.edu.ifsp.biblioteca.domain.Usuario;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-//Interface dita o contrato, diz quais métodos serão utilizados.
+public interface IUsuarioRepository extends JpaRepository<Usuario, Long> {
 
-public interface IUsuarioRepository{
+    Optional<Usuario> findByEmailIgnoreCase(String email);
 
-    Usuario salvar (Usuario usuario);
+    boolean existsByEmailIgnoreCase (String email);
 
-    Optional<Usuario> buscarPorId (Long id);
-
-    Optional<Usuario> buscarPorEmail (String email);
-
-    List<Usuario> listarTodos();
 }

@@ -1,27 +1,32 @@
 package br.edu.ifsp.biblioteca.domain;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table
 public class Autor {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false, length = 150)
     private String nome;
 
-    public Autor (String nome) {
+    public Autor(String nome) {
         this.nome = nome;
     }
 
-    public Long getId(){            //Acessa as infos dos métodos Private
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(Long id) {    //Altera as infos dos métodos Private
-        this.id = id;   //this referencia um parametro da classe e não do metodo
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getNome(){
-        return this.nome;
-    }
-
-    public void setId(String nome) {
-        this.nome = nome;
+    public String getNome() {
+        return nome;
     }
 
     public void setNome(String nome) {
@@ -29,7 +34,7 @@ public class Autor {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return this.nome;
     }
 }

@@ -4,5 +4,3 @@ public enum EStatusExemplar {
     DISPONIVEL,
     EMPRESTADO
 }
-
-

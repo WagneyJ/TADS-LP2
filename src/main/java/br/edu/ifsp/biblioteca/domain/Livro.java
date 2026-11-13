@@ -1,22 +1,50 @@
 package br.edu.ifsp.biblioteca.domain;
 
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "livro")
 public class Livro {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false, unique = true, length = 20)
     private String isbn;
+
+    @Column(nullable = false, length = 200)
     private String titulo;
+
+    @Column(name = "ano_publicacao")
     private Integer anoPublicacao;
-    private List<Exemplar> exemplares;
-    private List<Autor> autores;
+
+    @OneToMany(
+        mappedBy = "livro",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true,
+        fetch = FetchType.LAZY
+    )
+    private List<Exemplar> listaDeExemplares = new ArrayList<>();
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+        name = "livro_autor",
+        joinColumns = @JoinColumn(name = "livro_id"),
+        inverseJoinColumns = @JoinColumn(name = "autor_id")
+    )
+    private List<Autor> autores = new ArrayList<>();
+
+    public Livro() {}
 
     public Livro(String isbn, String titulo, Integer anoPublicacao) {
-        this.id = id;
         this.isbn = isbn;
         this.titulo = titulo;
         this.anoPublicacao = anoPublicacao;
-        this.exemplares = new ArrayList<>();
+        this.listaDeExemplares = new ArrayList<>();
         this.autores = new ArrayList<>();
     }
 
@@ -53,19 +81,19 @@ public class Livro {
     }
 
     public void adicionarExemplar(Exemplar item) {
-        this.exemplares.add(item);
+        this.listaDeExemplares.add(item);
     }
 
     public void adicionarAutor(Autor autor) {
         this.autores.add(autor);
     }
 
-    public List<Autor> getAutores (){
+    public List<Autor> getAutores() {
         return this.autores;
     }
 
     public List<Exemplar> getExemplares() {
-        return this.exemplares;
+        return this.listaDeExemplares;
     }
 
     @Override
